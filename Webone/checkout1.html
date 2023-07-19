@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Honey Seller - Checkout</title>
+  <style>
+    /* Add some basic styling to the page */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 30%
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Checkout</h2>
+  <form action="process_order.php" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="address">Address:</label>
+    <input type="text" id="address" name="address" required>
+
+    <label for="mobile">mobile number:</label>
+    <input type="number" id="number" name="number" required>
+
+
+    <label for="product">Select Product:</label>
+    <select id="product" name="product">
+      <option value="product1">Product 1</option>
+      <option value="product2">Product 2</option>
+      <option value="product3">Product 3</option>
+      <option value="product4">Product 4</option>
+      <option value="product5">Product 5</option>
+      <option value="product6">Product 6</option>
+    </select>
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" min="1" required>
+
+    <input type="submit" value="Place Order">
+  </form>
+</body>
+</html>

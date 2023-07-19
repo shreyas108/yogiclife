@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="stylereg.css" />
+    <script src="scriptreg.js" defer></script>
+    <title>Registraion Form</title>
+  </head>
+  <body>
+
+    <a href="cart.html" class="backbutton"><button style=" margin-left: 1090px; background-color: aqua; padding: 12px 20px; border-radius: 10px; ">Go Back</button></a>
+    <form action="#" class="form">
+      <h1 class="text-center" style="color: aqua;">Registration Form For CheckOut </h1>
+      <!-- Progress bar -->
+      <div class="progressbar">
+        <div class="progress" id="progress"></div>
+        
+        <div class="progress-step progress-step-active" data-title="Intro"></div>
+        <div class="progress-step" data-title="Contact"></div>
+        <div class="progress-step" data-title="ID"></div>
+        <div class="progress-step" data-title="Password"></div>
+      </div>
+    
+      <!-- Steps -->
+      <div class="form-step form-step-active">
+        <div class="input-group">
+          <label for="username" class="color">First Name</label>
+          <input type="text" name="username" id="username" placeholder="First Name" />
+          <div id="usernameError" class="error-message"></div>
+        </div>
+        <div class="input-group">
+          <label for="position" class="color">Last Name</label>
+          <input type="text" name="position" id="position" placeholder="Last Name" />
+          <div id="positionError" class="error-message"></div>
+        </div>
+        <div class="">
+          <a href="#" class="btn btn-next width-50 ml-auto" onclick="validateStep(event, 1)">Next</a>
+        </div>
+      </div>
+    
+      <div class="form-step">
+        <div class="input-group">
+          <label for="phone" class="color">Phone Number</label>
+          <input type="text" name="phone" id="phone" placeholder="Phone Number" />
+          <div id="phoneError" class="error-message"></div>
+        </div>
+        <div class="input-group">
+          <label for="email" class="color">Email</label>
+          <input type="text" name="email" id="email" placeholder="Email"/>
+          <div id="emailError" class="error-message"></div>
+        </div>
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <a href="#" class="btn btn-next" onclick="validateStep(event, 2)">Next</a>
+        </div>
+      </div>
+    
+      <div class="form-step">
+        <div class="input-group">
+          <label for="dob"class="color">Date of Birth</label>
+          <input type="date" name="dob" id="dob" placeholder="Date Of Birth"/>
+          <div id="dobError" class="error-message"></div>
+        </div>
+        <div class="input-group">
+          <label for="ID" class="color">Permanent Address</label>
+          <input type="number" name="ID" id="ID" placeholder="Permanent Address" />
+          <div id="IDError" class="error-message"></div>
+        </div>
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <a href="#" class="btn btn-next" onclick="validateStep(event, 3)">Next</a>
+        </div>
+      </div>
+    
+      <div class="form-step">
+        <div class="input-group">
+          <label for="password" class="color">Password</label>
+          <input type="password" name="password" id="password" placeholder="Password" />
+          <div id="passwordError" class="error-message"></div>
+        </div>
+        <div class="input-group">
+          <label for="confirmPassword" class="color">Confirm Password</label>
+          <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" />
+          <div id="confirmPasswordError" class="error-message"></div>
+        </div>
+        <div class="btns-group">
+          <a href="#" class="btn btn-prev">Previous</a>
+          <input type="submit" value="Submit" class="btn" />
+        </div>
+      </div>
+    </form>
+    
+    <script>
+      function validateStep(event, step) {
+        var isValid = true;
+    
+        if (step === 1) {
+          var firstName = document.getElementById("username").value;
+          var lastName = document.getElementById("position").value;
+    
+          if (firstName == '') {
+            document.getElementById("usernameError").textContent = "Please enter your first name";
+            isValid = false;
+          } else {
+            document.getElementById("usernameError").textContent = "";
+          }
+    
+          if (lastName == '') {
+            document.getElementById("positionError").textContent = "Please enter your last name";
+            isValid = false;
+          } else {
+            document.getElementById("positionError").textContent = "";
+          }
+        }
+    
+        if (step === 2) {
+          var phone = document.getElementById("phone").value;
+          var email = document.getElementById("email").value;
+    
+          if (phone === "") {
+            document.getElementById("phoneError").textContent = "Please enter your phone number";
+            isValid = false;
+          } else {
+            document.getElementById("phoneError").textContent = "";
+          }
+    
+          if (email === "") {
+            document.getElementById("emailError").textContent = "Please enter your email";
+            isValid = false;
+          } else {
+            document.getElementById("emailError").textContent = "";
+          }
+        }
+    
+        if (step === 3) {
+          var dob = document.getElementById("dob").value;
+          var ID = document.getElementById("ID").value;
+    
+          if (dob === "") {
+            document.getElementById("dobError").textContent = "Please enter your date of birth";
+            isValid = false;
+          } else {
+            document.getElementById("dobError").textContent = "";
+          }
+    
+          if (ID === "") {
+            document.getElementById("IDError").textContent = "Please enter your permanent address";
+            isValid = false;
+          } else {
+            document.getElementById("IDError").textContent = "";
+          }
+        }
+    
+        if (step === 4) {
+          var password = document.getElementById("password").value;
+          var confirmPassword = document.getElementById("confirmPassword").value;
+    
+          if (password === "") {
+            document.getElementById("passwordError").textContent = "Please enter a password";
+            isValid = false;
+          } else {
+            document.getElementById("passwordError").textContent = "";
+          }
+    
+          if (confirmPassword === "") {
+            document.getElementById("confirmPasswordError").textContent = "Please confirm your password";
+            isValid = false;
+          } else {
+            document.getElementById("confirmPasswordError").textContent = "";
+          }
+        }
+    
+        if (!isValid) {
+          event.preventDefault(); // Prevent form submission
+        }
+      }
+    </script>
+    
+   
+  </body>
+</html>
