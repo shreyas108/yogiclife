@@ -1494,3 +1494,17 @@ font-size: 14px;
         padding: 20px;
     }
 }
+
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px; /* Adjust this value to control the vertical position from the bottom */
+    left: 20px; /* Adjust this value to control the horizontal position from the left */
+    z-index: 9999; /* Adjust the z-index to ensure the div is above other elements if necessary */
+    background-color: #ffffff; /* Set the background color if needed */
+    padding: 10px; /* Set padding for the content inside the div */
+  }
+  
+  .whatsapp-float p {
+    margin: 0; /* Remove default margin for the paragraph */
+  }
