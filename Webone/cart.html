@@ -39,7 +39,7 @@
 
         <section id="page-header" class="about-header">
             
-            <h2>#let's_talk</h2>
+            <h2>#let's_tak</h2>
             
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
            
@@ -57,33 +57,8 @@
                                 <td>Subtotal</td>
                         </tr>
                     </thead>
-                        <tbody>
-                            <tr>
-                                    <td><a href="#"><i class="fa fa-trash" ></i></a></td>
-                                    <td><img src="img/bottel1.png" alt=""></td>
-                                    <td>Honey Bottle of 1kg</td>
-                                    <td>Rs. 321/-</td>
-                                    <td><input type="number" value="1"></td>
-                                    <td>Rs.321/-</td>
-                            </tr>
-
-                            <tr>
-                                    <td><a href="#"><i class="fa fa-trash" ></i></a></td>
-                                    <td><img src="img/bottel1.png" alt=""></td>
-                                    <td>Honey Bottle of 1kg</td>
-                                    <td>Rs. 321/-</td>
-                                    <td><input type="number" value="1"></td>
-                                    <td>Rs.321/-</td>
-                            </tr>
+                        <tbody id="cartBody">
                             
-                            <tr>
-                                    <td><a href="#"><i class="fa fa-trash" ></i></a></td>
-                                    <td><img src="img/bottel1.png" alt=""></td>
-                                    <td>Honey Bottle of 1kg</td>
-                                    <td>Rs. 321/-</td>
-                                    <td><input type="number" value="1"></td>
-                                    <td>Rs.321/-</td>
-                            </tr>
                         </tbody>
                 </table>
         </section>
@@ -102,19 +77,20 @@
                 <table>
                     <tr>
                         <td>Cart Subtotal</td>
-                        <td>Rs.521/-</td>
+                        <td id="cartSubtotal" style="font-weight: bold;">Rs. 0/-</td>
                     </tr>
                     <tr>
                         <td>Shipping</td>
-                        <td>Free</td>
+                        <td style="font-weight: bold;">Free</td>
                     </tr>
                     <tr>
                         <td><strong>Total</strong></td>
-                        <td><strong>Rs.1000/-</strong></td>
+                        <td id="cartTotal" style="font-weight: bold;">Rs. 0/-</td>
                     </tr>
                 </table>
                 <a href="RegistrationForm.html">  <button class="normal">Procced To Checkout</button></a>
             </div>
+            
         </section>
        
        
@@ -207,6 +183,11 @@
                   </div>
 
 
+                  <div style="text-align: center;">
+                    <a href="privacypolicy.html" style="color: black;">Privacy Policy</a>
+                    <a href="Refundpolicy.html" style="color: black;">Refunf Policy</a>
+                </div>
+
                   <div class="whatsapp-float" style="margin-left: 90%;">
                     <a href="https://wa.me/917498903974" target="_blank"> <img src="https://tse3.mm.bing.net/th?id=OIP.Wwr46uH0TJDPV-3wlsn51QHaHa&pid=Api&P=0&h=180"
                       width ="50px" class="whatsapp_float_btn"/></a>
@@ -221,5 +202,132 @@
 
 
             <script src="script.js">   </script>
+
+            <script>
+                // Function to update the cart subtotal and total
+                function updateCartTotals() {
+                    var cartSubtotal = 0;
+            
+                    // Get all the rows in the cart table
+                    var cartRows = document.querySelectorAll("#cartBody tr");
+            
+                    // Calculate the cart subtotal based on each row's subtotal
+                    cartRows.forEach(function (row) {
+                        var subtotalCell = row.querySelector(".subtotal");
+                        var subtotal = parseInt(subtotalCell.innerText);
+                        cartSubtotal += subtotal;
+                    });
+            
+                    // Update the cart subtotal and total elements
+                    var cartSubtotalElement = document.getElementById("cartSubtotal");
+                    var cartTotalElement = document.getElementById("cartTotal");
+                    cartSubtotalElement.innerText = "Rs. " + cartSubtotal + "/-";
+                    cartTotalElement.innerText = "Rs. " + cartSubtotal + "/-";
+                }
+            
+                // Function to update the subtotal based on the selected quantity
+                function updateSubtotal(inputElement) {
+                    var row = inputElement.parentNode.parentNode;
+                    var priceCell = row.querySelector(".price");
+                    var subtotalCell = row.querySelector(".subtotal");
+                    var price = parseInt(priceCell.innerText);
+                    var quantity = parseInt(inputElement.value);
+                    var subtotal = price * quantity;
+                    subtotalCell.innerText = subtotal;
+            
+                    // Update the cart totals
+                    updateCartTotals();
+            
+                    // Update the cart items in localStorage
+                    updateLocalStorage();
+                }
+            
+               // Function to remove a row from the cart
+                function removeRow(deleteIcon, event) {
+                    var row = deleteIcon.closest("tr");
+                    row.remove();
+
+                    // Update the cart totals
+                    updateCartTotals();
+
+                    // Update the cart items in localStorage
+                    updateLocalStorage();
+
+                    // Prevent the event from bubbling up (optional)
+                    event.stopPropagation();
+                }
+            
+                // Function to update cart items in localStorage
+                function updateLocalStorage() {
+                    var cartRows = document.querySelectorAll("#cartBody tr");
+                    var cartItems = [];
+            
+                    cartRows.forEach(function (row) {
+                        var productName = row.querySelector("td:nth-child(3)").innerText;
+                        var price = parseInt(row.querySelector(".price").innerText);
+                        var quantity = parseInt(row.querySelector("input").value);
+                        var subtotal = price * quantity;
+            
+                        cartItems.push({
+                            productName: productName,
+                            price: price,
+                            quantity: quantity,
+                            subtotal: subtotal,
+                        });
+                    });
+            
+                    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                }
+
+                 // Function to clear the cart items in localStorage for new users
+                    function clearCartItems() {
+                        localStorage.removeItem("cartItems");
+                    }
+
+                    // Function to check if cart items are available in localStorage
+                    function isCartEmpty() {
+                        var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+                        return cartItems.length === 0;
+                    }
+              
+                // Load cart items from localStorage on page load
+                function loadCartItems() {
+
+                    if (isCartEmpty()) {
+                        // Call the function to clear cart items
+                        clearCartItems();
+                    }
+
+
+                    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+                    var cartBody = document.getElementById("cartBody");
+
+                    // Clear the existing cart rows
+                    cartBody.innerHTML = "";
+            
+                    cartItems.forEach(function (item) {
+                        var newRow = document.createElement("tr");
+                        newRow.innerHTML = `
+                        <td><a href="#"><i class="fa fa-trash" onclick="removeRow(this, event)"></i></a></td>
+                            <td><img src="${item.imageSrc}" alt=""></td>
+                            <td>${item.productName}</td>
+                            <td class="price">${item.price}</td>
+                            <td><input type="number" value="${item.quantity}" min="1" onchange="updateSubtotal(this)"></td>
+                            <td class="subtotal">${item.subtotal}</td>
+                        `;
+                        cartBody.appendChild(newRow);
+                    });
+            
+                    // Update the cart totals initially
+                    updateCartTotals();
+                }
+            
+                // Run the function to load cart items on page load
+                window.onload = function () {
+                    loadCartItems();
+                };
+            </script>
+            
+            
 </body>
 </html>

@@ -62,15 +62,15 @@
                     <h6>Home/Honey</h6>
                     <h4>Pure Honey For Stay High</h4>
                     <h2 id="result"></h2>
-                    <select id="optionList" onchange="test()" >
+                    <select id="optionList" onchange="test()">
                         <option> Select Grams</option>
-                        <option value="Rs.199/-"> 10gms</option>
-                        <option value="Rs.399/-">100gms</option>
-                        <option value="Rs.599/-"> 500gms</option>
-                        <option value="Rs.999/-"> 1kg</option>
+                        <option value="199"> 10gms - Rs.199/-</option>
+                        <option value="399">100gms - Rs.399/-</option>
+                        <option value="599"> 500gms - Rs.599/-</option>
+                        <option value="999"> 1kg - Rs.999/-</option>
                     </select>
-                        <!-- <input type="number" value="1"> -->
-                        <a href="cart.html"><button class="normal">Buy it Now</button></a>
+                    <button class="normal" onclick="addToCart()">Add To Cart</button>
+
                         <h4>Product Details</h4>
                         <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus maiores laborum quae, natus fugit fuga iusto facilis nesciunt cum qui, excepturi a accusamus vero sequi sed magni facere soluta voluptate voluptas ipsam ipsum optio velit ea? Nam vero quia sint maiores vel distinctio eum, deleniti beatae corrupti quis illum consequatur quisquam repellat fugiat alias ullam dolore magnam neque minima a iusto facilis ab dolor vitae. Ea nam voluptatibus at aliquid accusantium libero inventore veritatis dolorum mollitia? Non tenetur amet sapiente quibusdam perspiciatis laboriosam reiciendis accusamus quisquam facilis maiores vel sint perferendis alias necessitatibus ut tempora autem, minima dolorem doloremque! Sed!</span>
                 </div>
@@ -250,6 +250,12 @@
                                 
                           </div>
 
+                          <div style="text-align: center;">
+                            <a href="privacypolicy.html" style="color: black;">Privacy Policy</a>
+                            <a href="Refundpolicy.html" style="color: black;">Refunf Policy</a>
+                        </div>
+                
+
                           <div class="whatsapp-float" style="margin-left: 90%;">
                             <a href="https://wa.me/917498903974" target="_blank"> <img src="https://tse3.mm.bing.net/th?id=OIP.Wwr46uH0TJDPV-3wlsn51QHaHa&pid=Api&P=0&h=180"
                               width ="50px" class="whatsapp_float_btn"/></a>
@@ -274,6 +280,84 @@
                     smallimg[3].onclick = function(){
                         MainImg.src = smallimg[3].src;
                     }
+
+
+
+
+                    
+                    function test() {
+            var optionList = document.getElementById("optionList");
+            var result = document.getElementById("result");
+            result.innerText = optionList.value;
+        }
+
+        function addToCart() {
+            var optionList = document.getElementById("optionList");
+            var selectedGrams = optionList.value;
+            var price = "";
+
+            // Get the price based on the selected grams
+            switch (selectedGrams) {
+                case "199":
+                    price = 199;
+                    break;
+                case "399":
+                    price = 399;
+                    break;
+                case "599":
+                    price = 599;
+                    break;
+                case "999":
+                    price = 999;
+                    break;
+                default:
+                    price = 0;
+                    break;
+            }
+
+            var productName = "Honey Bottle of Raw " + selectedGrams + "gms";
+            var imageSrc = "img/bottel1.png";
+            var quantity = 1;
+            var subtotal = price * quantity; // Calculate subtotal based on the selected quantity
+
+            // Prepare the selected product object
+            var selectedProduct = {
+                productName: productName,
+                imageSrc: imageSrc,
+                price: price,
+                quantity: quantity,
+                subtotal: subtotal,
+            };
+
+            // Retrieve existing cart items from localStorage
+            var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+            // Check if the selected product already exists in the cart
+            var existingItem = cartItems.find(function (item) {
+                return item.productName === selectedProduct.productName;
+            });
+
+            if (existingItem) {
+                // If the product exists in the cart, update the quantity and subtotal
+                existingItem.quantity += selectedProduct.quantity;
+                existingItem.subtotal = existingItem.price * existingItem.quantity;
+            } else {
+                // If the product is not in the cart, add it as a new item
+                cartItems.push(selectedProduct);
+            }
+
+            // Store the updated cart items in localStorage
+            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+            // Redirect to the cart page
+            window.location.href = "cart.html";
+        }
+
+
+
+
+
+
                 </script>
             <script src="script.js">   </script>
     </body>
